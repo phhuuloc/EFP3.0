@@ -1,0 +1,131 @@
+fluent doing_well, in_room_a, in_room_b, in_room_c, in_room_d, team_leader_a, team_leader_b, team_leader_c, team_leader_d;
+
+action leave_room[a], leave_room[b], leave_room[c], leave_room[d];
+
+action enter_room[a], enter_room[b], enter_room[c], enter_room[d];
+
+action attend_meeting[a], attend_meeting[b], attend_meeting[c], attend_meeting[d];
+
+action tell_good[a], tell_not_good[a];
+
+agent a,b,c,d;
+
+executable leave_room[a] if B(a, in_room_a), in_room_a;
+leave_room[a] causes -in_room_a;
+a observes leave_room[a];
+b observes leave_room[a] if in_room_b;
+c observes leave_room[a] if in_room_c;
+d observes leave_room[a] if in_room_d;
+
+executable leave_room[b] if B(b, in_room_b), in_room_b;
+leave_room[b] causes -in_room_b;
+a observes leave_room[b] if in_room_a;
+b observes leave_room[b];
+c observes leave_room[b] if in_room_c;
+d observes leave_room[b] if in_room_d;
+
+executable leave_room[c] if B(c, in_room_c), in_room_c;
+leave_room[c] causes -in_room_c;
+a observes leave_room[c] if in_room_a;
+b observes leave_room[c] if in_room_b;
+c observes leave_room[c];
+d observes leave_room[c] if in_room_d;
+
+executable leave_room[d] if B(d, in_room_d), in_room_d;
+leave_room[d] causes -in_room_d;
+a observes leave_room[d] if in_room_a;
+b observes leave_room[d] if in_room_b;
+c observes leave_room[d] if in_room_c;
+d observes leave_room[d];
+
+executable enter_room[a] if B(a, -in_room_a), -in_room_a;
+enter_room[a] causes in_room_a;
+a observes enter_room[a];
+b observes enter_room[a] if in_room_b;
+c observes enter_room[a] if in_room_c;
+d observes enter_room[a] if in_room_d;
+
+executable enter_room[b] if B(a, -in_room_b), -in_room_b;
+enter_room[b] causes in_room_b;
+a observes enter_room[b] if in_room_a;
+b observes enter_room[b];
+c observes enter_room[b] if in_room_c;
+d observes enter_room[b] if in_room_d;
+
+executable enter_room[c] if B(a, -in_room_c), -in_room_c;
+enter_room[c] causes in_room_c;
+a observes enter_room[c] if in_room_a;
+b observes enter_room[c] if in_room_b;
+c observes enter_room[c];
+d observes enter_room[c] if in_room_d;
+
+executable enter_room[d] if B(a, -in_room_d), -in_room_d;
+enter_room[d] causes in_room_d;
+a observes enter_room[d] if in_room_a;
+b observes enter_room[d] if in_room_b;
+c observes enter_room[d] if in_room_c;
+d observes enter_room[d];
+
+executable attend_meeting[a] if B(a,team_leader_a), B(a, -in_room_a), team_leader_a, -in_room_a;
+attend_meeting[a] determines doing_well;
+b aware_of attend_meeting[a] if in_room_b;
+c aware_of attend_meeting[a] if in_room_c;
+d aware_of attend_meeting[a] if in_room_d;
+a observes attend_meeting[a];
+
+executable attend_meeting[b] if B(b,team_leader_b), B(b, -in_room_b), team_leader_b, -in_room_b;
+attend_meeting[b] determines doing_well;
+b observes attend_meeting[b];
+a aware_of attend_meeting[b];
+c aware_of attend_meeting[b];
+d aware_of attend_meeting[b];
+
+executable attend_meeting[c] if B(c,team_leader_c), B(c, -in_room_c), team_leader_c, -in_room_c;
+attend_meeting[c] determines doing_well;
+c observes attend_meeting[c];
+b aware_of attend_meeting[c];
+a aware_of attend_meeting[c];
+d aware_of attend_meeting[c];
+
+executable attend_meeting[d] if B(d,team_leader_d), B(d, -in_room_d), team_leader_d, -in_room_d;
+attend_meeting[d] determines doing_well;
+d observes attend_meeting[d];
+b aware_of attend_meeting[d];
+c aware_of attend_meeting[d];
+a aware_of attend_meeting[d];
+
+executable tell_good[a] if B(a,team_leader_a), B(a, doing_well), team_leader_a, doing_well;
+tell_good[a] announces doing_well;
+a observes tell_good[a];
+b observes tell_good[a] if in_room_b;
+c observes tell_good[a] if in_room_c;
+d observes tell_good[a] if in_room_d;
+
+executable tell_not_good[a] if B(a,team_leader_a), team_leader_a;
+tell_not_good[a] announces -doing_well;
+a observes tell_not_good[a];
+b observes tell_not_good[a] if in_room_b;
+c observes tell_not_good[a] if in_room_c;
+d observes tell_not_good[a] if in_room_d;
+
+initially C([a,b,c,d], team_leader_a);
+initially C([a,b,c,d], -team_leader_b);
+initially C([a,b,c,d], -team_leader_c);
+initially C([a,b,c,d], -team_leader_d);
+initially C([a,b,c,d], in_room_a);
+initially C([a,b,c,d], in_room_b);
+initially C([a,b,c,d], in_room_c);
+initially C([a,b,c,d], in_room_d);
+initially doing_well, in_room_a, in_room_b, in_room_c, in_room_d, team_leader_a, -team_leader_b, -team_leader_c, -team_leader_d;
+
+%goal B(a, doing_well) | B(a, -doing_well);
+
+%goal B(b, B(a,doing_well) | B(b, B(a,-doing_well)));
+%goal B(c, B(a,doing_well) | B(c, B(a,-doing_well)));
+%goal B(d, B(a,doing_well) | B(d, B(a,-doing_well)));
+%goal B(a, B(b, -doing_well));
+%goal C([b,c,d], -doing_well);
+
+goal B(b, -doing_well);
+
+%goal C([a,b,c], doing_well);

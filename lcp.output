@@ -1,0 +1,1923 @@
+Useless nonterminals
+
+   gd_formula
+
+
+Useless rules
+
+   83 gd_formula: literal
+   84           | gd_formula COMMA gd_formula
+   85           | gd_formula OR gd_formula
+   86           | LEFT_PAREN gd_formula RIGHT_PAREN
+
+
+State 0 conflicts: 1 reduce/reduce
+State 102 conflicts: 2 shift/reduce
+State 123 conflicts: 3 shift/reduce
+State 142 conflicts: 3 reduce/reduce
+
+
+Grammar
+
+    0 $accept: input $end
+
+    1 input: /* empty */
+    2      | fluent_decls action_decls agent_decls domain init_spec goal_spec
+
+    3 fluent_decls: /* empty */
+    4             | fluent_decls fluent_decl
+
+    5 fluent_decl: FLUENT fluent_list SEMICOLON
+
+    6 fluent: id
+    7       | id LEFT_PAREN param_list RIGHT_PAREN
+
+    8 fluent_det_list: fluent
+
+    9 fluent_list: fluent
+   10            | fluent_list COMMA fluent
+
+   11 id: ID
+
+   12 constant: NUMBER
+   13         | id
+
+   14 param: constant
+
+   15 param_list: param
+   16           | param_list COMMA param
+
+   17 action_decls: /* empty */
+   18             | action_decls action_decl
+
+   19 action_decl: ACTION action_list SEMICOLON
+
+   20 action_list: action
+   21            | action_list COMMA action
+
+   22 action: id LEFT_BRAC executors RIGHT_BRAC
+   23       | id LEFT_BRAC executors RIGHT_BRAC LEFT_PAREN observers RIGHT_PAREN
+
+   24 executors: executor
+   25          | executors COMMA executor
+
+   26 executor: id
+
+   27 observers: observer
+   28          | observers COMMA observer
+
+   29 observer: id
+
+   30 literal: fluent
+   31        | NEGATION fluent
+
+   32 literal_list: literal
+   33             | literal_list COMMA literal
+
+   34 formula: literal
+   35        | formula COMMA formula
+   36        | formula OR formula
+   37        | LEFT_PAREN formula RIGHT_PAREN
+
+   38 agent: id
+   39      | id LEFT_PAREN param_list RIGHT_PAREN
+
+   40 agent_list: agent
+   41           | agent_list COMMA agent
+
+   42 agent_decl: AGENT agent_list SEMICOLON
+
+   43 agent_decls: /* empty */
+   44            | agent_decls agent_decl
+
+   45 if_part: /* empty */
+   46        | IF literal_list
+
+   47 if_part_bf: /* empty */
+   48           | IF belief_formula
+
+   49 belief_formula: formula
+   50               | B LEFT_PAREN agent COMMA belief_formula RIGHT_PAREN
+   51               | belief_formula COMMA belief_formula
+   52               | belief_formula OR belief_formula
+   53               | LEFT_PAREN NEGATION belief_formula RIGHT_PAREN
+   54               | LEFT_PAREN belief_formula RIGHT_PAREN
+   55               | E LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC COMMA belief_formula RIGHT_PAREN
+   56               | C LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC COMMA belief_formula RIGHT_PAREN
+
+   57 if_part_fluent: /* empty */
+   58               | IF formula
+
+   59 static_law: literal_list if_part SEMICOLON
+
+   60 dynamic_law: action CAUSES literal_list if_part_bf SEMICOLON
+
+   61 executability: EXECUTABLE action if_part_bf SEMICOLON
+
+   62 determine: action DETERMINE fluent_det_list SEMICOLON
+
+   63 announcement: action ANNOUNCES formula SEMICOLON
+
+   64 awareness: agent AWAREOF action if_part_fluent SEMICOLON
+
+   65 observance: agent OBSERVES action if_part_fluent SEMICOLON
+
+   66 impossibility: IMPOSSIBLE action if_part SEMICOLON
+
+   67 proposition: static_law
+   68            | dynamic_law
+   69            | executability
+   70            | impossibility
+   71            | determine
+   72            | announcement
+   73            | observance
+   74            | awareness
+
+   75 domain: /* empty */
+   76       | domain proposition
+
+   77 init: INIT belief_formula SEMICOLON
+
+   78 init_spec: /* empty */
+   79          | init_spec init
+
+   80 goal: GOAL belief_formula SEMICOLON
+
+   81 goal_spec: /* empty */
+   82          | goal_spec goal
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+OR (258) 36 52
+COMMA (259) 10 16 21 25 28 33 35 41 50 51 55 56
+SEMICOLON (260) 5 19 42 59 60 61 62 63 64 65 66 77 80
+LEFT_PAREN (261) 7 23 37 39 50 53 54 55 56
+RIGHT_PAREN (262) 7 23 37 39 50 53 54 55 56
+RIGHT_BRAC (263) 22 23 55 56
+LEFT_BRAC (264) 22 23 55 56
+ID (265) 11
+NEGATION (266) 31 53
+NUMBER (267) 12
+FLUENT (268) 5
+ACTION (269) 19
+IF (270) 46 48 58
+CAUSES (271) 60
+EXECUTABLE (272) 61
+IMPOSSIBLE (273) 66
+DETERMINE (274) 62
+AWAREOF (275) 64
+OBSERVES (276) 65
+ANNOUNCES (277) 63
+INIT (278) 77
+GOAL (279) 80
+AGENT (280) 42
+B (281) 50
+C (282) 56
+E (283) 55
+
+
+Nonterminals, with rules where they appear
+
+$accept (29)
+    on left: 0
+input (30)
+    on left: 1 2, on right: 0
+fluent_decls (31)
+    on left: 3 4, on right: 2 4
+fluent_decl (32)
+    on left: 5, on right: 4
+fluent (33)
+    on left: 6 7, on right: 8 9 10 30 31
+fluent_det_list (34)
+    on left: 8, on right: 62
+fluent_list (35)
+    on left: 9 10, on right: 5 10
+id (36)
+    on left: 11, on right: 6 7 13 22 23 26 29 38 39
+constant (37)
+    on left: 12 13, on right: 14
+param (38)
+    on left: 14, on right: 15 16
+param_list (39)
+    on left: 15 16, on right: 7 16 39
+action_decls (40)
+    on left: 17 18, on right: 2 18
+action_decl (41)
+    on left: 19, on right: 18
+action_list (42)
+    on left: 20 21, on right: 19 21
+action (43)
+    on left: 22 23, on right: 20 21 60 61 62 63 64 65 66
+executors (44)
+    on left: 24 25, on right: 22 23 25
+executor (45)
+    on left: 26, on right: 24 25
+observers (46)
+    on left: 27 28, on right: 23 28
+observer (47)
+    on left: 29, on right: 27 28
+literal (48)
+    on left: 30 31, on right: 32 33 34
+literal_list (49)
+    on left: 32 33, on right: 33 46 59 60
+formula (50)
+    on left: 34 35 36 37, on right: 35 36 37 49 58 63
+agent (51)
+    on left: 38 39, on right: 40 41 50 64 65
+agent_list (52)
+    on left: 40 41, on right: 41 42 55 56
+agent_decl (53)
+    on left: 42, on right: 44
+agent_decls (54)
+    on left: 43 44, on right: 2 44
+if_part (55)
+    on left: 45 46, on right: 59 66
+if_part_bf (56)
+    on left: 47 48, on right: 60 61
+belief_formula (57)
+    on left: 49 50 51 52 53 54 55 56, on right: 48 50 51 52 53 54 55
+    56 77 80
+if_part_fluent (58)
+    on left: 57 58, on right: 64 65
+static_law (59)
+    on left: 59, on right: 67
+dynamic_law (60)
+    on left: 60, on right: 68
+executability (61)
+    on left: 61, on right: 69
+determine (62)
+    on left: 62, on right: 71
+announcement (63)
+    on left: 63, on right: 72
+awareness (64)
+    on left: 64, on right: 74
+observance (65)
+    on left: 65, on right: 73
+impossibility (66)
+    on left: 66, on right: 70
+proposition (67)
+    on left: 67 68 69 70 71 72 73 74, on right: 76
+domain (68)
+    on left: 75 76, on right: 2 76
+init (69)
+    on left: 77, on right: 79
+init_spec (70)
+    on left: 78 79, on right: 2 79
+goal (71)
+    on left: 80, on right: 82
+goal_spec (72)
+    on left: 81 82, on right: 2 82
+
+
+state 0
+
+    0 $accept: . input $end
+
+    $end      reduce using rule 1 (input)
+    $end      [reduce using rule 3 (fluent_decls)]
+    $default  reduce using rule 3 (fluent_decls)
+
+    input         go to state 1
+    fluent_decls  go to state 2
+
+
+state 1
+
+    0 $accept: input . $end
+
+    $end  shift, and go to state 3
+
+
+state 2
+
+    2 input: fluent_decls . action_decls agent_decls domain init_spec goal_spec
+    4 fluent_decls: fluent_decls . fluent_decl
+
+    FLUENT  shift, and go to state 4
+
+    $default  reduce using rule 17 (action_decls)
+
+    fluent_decl   go to state 5
+    action_decls  go to state 6
+
+
+state 3
+
+    0 $accept: input $end .
+
+    $default  accept
+
+
+state 4
+
+    5 fluent_decl: FLUENT . fluent_list SEMICOLON
+
+    ID  shift, and go to state 7
+
+    fluent       go to state 8
+    fluent_list  go to state 9
+    id           go to state 10
+
+
+state 5
+
+    4 fluent_decls: fluent_decls fluent_decl .
+
+    $default  reduce using rule 4 (fluent_decls)
+
+
+state 6
+
+    2 input: fluent_decls action_decls . agent_decls domain init_spec goal_spec
+   18 action_decls: action_decls . action_decl
+
+    ACTION  shift, and go to state 11
+
+    $default  reduce using rule 43 (agent_decls)
+
+    action_decl  go to state 12
+    agent_decls  go to state 13
+
+
+state 7
+
+   11 id: ID .
+
+    $default  reduce using rule 11 (id)
+
+
+state 8
+
+    9 fluent_list: fluent .
+
+    $default  reduce using rule 9 (fluent_list)
+
+
+state 9
+
+    5 fluent_decl: FLUENT fluent_list . SEMICOLON
+   10 fluent_list: fluent_list . COMMA fluent
+
+    COMMA      shift, and go to state 14
+    SEMICOLON  shift, and go to state 15
+
+
+state 10
+
+    6 fluent: id .
+    7       | id . LEFT_PAREN param_list RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 16
+
+    $default  reduce using rule 6 (fluent)
+
+
+state 11
+
+   19 action_decl: ACTION . action_list SEMICOLON
+
+    ID  shift, and go to state 7
+
+    id           go to state 17
+    action_list  go to state 18
+    action       go to state 19
+
+
+state 12
+
+   18 action_decls: action_decls action_decl .
+
+    $default  reduce using rule 18 (action_decls)
+
+
+state 13
+
+    2 input: fluent_decls action_decls agent_decls . domain init_spec goal_spec
+   44 agent_decls: agent_decls . agent_decl
+
+    AGENT  shift, and go to state 20
+
+    $default  reduce using rule 75 (domain)
+
+    agent_decl  go to state 21
+    domain      go to state 22
+
+
+state 14
+
+   10 fluent_list: fluent_list COMMA . fluent
+
+    ID  shift, and go to state 7
+
+    fluent  go to state 23
+    id      go to state 10
+
+
+state 15
+
+    5 fluent_decl: FLUENT fluent_list SEMICOLON .
+
+    $default  reduce using rule 5 (fluent_decl)
+
+
+state 16
+
+    7 fluent: id LEFT_PAREN . param_list RIGHT_PAREN
+
+    ID      shift, and go to state 7
+    NUMBER  shift, and go to state 24
+
+    id          go to state 25
+    constant    go to state 26
+    param       go to state 27
+    param_list  go to state 28
+
+
+state 17
+
+   22 action: id . LEFT_BRAC executors RIGHT_BRAC
+   23       | id . LEFT_BRAC executors RIGHT_BRAC LEFT_PAREN observers RIGHT_PAREN
+
+    LEFT_BRAC  shift, and go to state 29
+
+
+state 18
+
+   19 action_decl: ACTION action_list . SEMICOLON
+   21 action_list: action_list . COMMA action
+
+    COMMA      shift, and go to state 30
+    SEMICOLON  shift, and go to state 31
+
+
+state 19
+
+   20 action_list: action .
+
+    $default  reduce using rule 20 (action_list)
+
+
+state 20
+
+   42 agent_decl: AGENT . agent_list SEMICOLON
+
+    ID  shift, and go to state 7
+
+    id          go to state 32
+    agent       go to state 33
+    agent_list  go to state 34
+
+
+state 21
+
+   44 agent_decls: agent_decls agent_decl .
+
+    $default  reduce using rule 44 (agent_decls)
+
+
+state 22
+
+    2 input: fluent_decls action_decls agent_decls domain . init_spec goal_spec
+   76 domain: domain . proposition
+
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+    EXECUTABLE  shift, and go to state 36
+    IMPOSSIBLE  shift, and go to state 37
+
+    $default  reduce using rule 78 (init_spec)
+
+    fluent         go to state 38
+    id             go to state 39
+    action         go to state 40
+    literal        go to state 41
+    literal_list   go to state 42
+    agent          go to state 43
+    static_law     go to state 44
+    dynamic_law    go to state 45
+    executability  go to state 46
+    determine      go to state 47
+    announcement   go to state 48
+    awareness      go to state 49
+    observance     go to state 50
+    impossibility  go to state 51
+    proposition    go to state 52
+    init_spec      go to state 53
+
+
+state 23
+
+   10 fluent_list: fluent_list COMMA fluent .
+
+    $default  reduce using rule 10 (fluent_list)
+
+
+state 24
+
+   12 constant: NUMBER .
+
+    $default  reduce using rule 12 (constant)
+
+
+state 25
+
+   13 constant: id .
+
+    $default  reduce using rule 13 (constant)
+
+
+state 26
+
+   14 param: constant .
+
+    $default  reduce using rule 14 (param)
+
+
+state 27
+
+   15 param_list: param .
+
+    $default  reduce using rule 15 (param_list)
+
+
+state 28
+
+    7 fluent: id LEFT_PAREN param_list . RIGHT_PAREN
+   16 param_list: param_list . COMMA param
+
+    COMMA        shift, and go to state 54
+    RIGHT_PAREN  shift, and go to state 55
+
+
+state 29
+
+   22 action: id LEFT_BRAC . executors RIGHT_BRAC
+   23       | id LEFT_BRAC . executors RIGHT_BRAC LEFT_PAREN observers RIGHT_PAREN
+
+    ID  shift, and go to state 7
+
+    id         go to state 56
+    executors  go to state 57
+    executor   go to state 58
+
+
+state 30
+
+   21 action_list: action_list COMMA . action
+
+    ID  shift, and go to state 7
+
+    id      go to state 17
+    action  go to state 59
+
+
+state 31
+
+   19 action_decl: ACTION action_list SEMICOLON .
+
+    $default  reduce using rule 19 (action_decl)
+
+
+state 32
+
+   38 agent: id .
+   39      | id . LEFT_PAREN param_list RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 60
+
+    $default  reduce using rule 38 (agent)
+
+
+state 33
+
+   40 agent_list: agent .
+
+    $default  reduce using rule 40 (agent_list)
+
+
+state 34
+
+   41 agent_list: agent_list . COMMA agent
+   42 agent_decl: AGENT agent_list . SEMICOLON
+
+    COMMA      shift, and go to state 61
+    SEMICOLON  shift, and go to state 62
+
+
+state 35
+
+   31 literal: NEGATION . fluent
+
+    ID  shift, and go to state 7
+
+    fluent  go to state 63
+    id      go to state 10
+
+
+state 36
+
+   61 executability: EXECUTABLE . action if_part_bf SEMICOLON
+
+    ID  shift, and go to state 7
+
+    id      go to state 17
+    action  go to state 64
+
+
+state 37
+
+   66 impossibility: IMPOSSIBLE . action if_part SEMICOLON
+
+    ID  shift, and go to state 7
+
+    id      go to state 17
+    action  go to state 65
+
+
+state 38
+
+   30 literal: fluent .
+
+    $default  reduce using rule 30 (literal)
+
+
+state 39
+
+    6 fluent: id .
+    7       | id . LEFT_PAREN param_list RIGHT_PAREN
+   22 action: id . LEFT_BRAC executors RIGHT_BRAC
+   23       | id . LEFT_BRAC executors RIGHT_BRAC LEFT_PAREN observers RIGHT_PAREN
+   38 agent: id .
+   39      | id . LEFT_PAREN param_list RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 66
+    LEFT_BRAC   shift, and go to state 29
+
+    AWAREOF   reduce using rule 38 (agent)
+    OBSERVES  reduce using rule 38 (agent)
+    $default  reduce using rule 6 (fluent)
+
+
+state 40
+
+   60 dynamic_law: action . CAUSES literal_list if_part_bf SEMICOLON
+   62 determine: action . DETERMINE fluent_det_list SEMICOLON
+   63 announcement: action . ANNOUNCES formula SEMICOLON
+
+    CAUSES     shift, and go to state 67
+    DETERMINE  shift, and go to state 68
+    ANNOUNCES  shift, and go to state 69
+
+
+state 41
+
+   32 literal_list: literal .
+
+    $default  reduce using rule 32 (literal_list)
+
+
+state 42
+
+   33 literal_list: literal_list . COMMA literal
+   59 static_law: literal_list . if_part SEMICOLON
+
+    COMMA  shift, and go to state 70
+    IF     shift, and go to state 71
+
+    $default  reduce using rule 45 (if_part)
+
+    if_part  go to state 72
+
+
+state 43
+
+   64 awareness: agent . AWAREOF action if_part_fluent SEMICOLON
+   65 observance: agent . OBSERVES action if_part_fluent SEMICOLON
+
+    AWAREOF   shift, and go to state 73
+    OBSERVES  shift, and go to state 74
+
+
+state 44
+
+   67 proposition: static_law .
+
+    $default  reduce using rule 67 (proposition)
+
+
+state 45
+
+   68 proposition: dynamic_law .
+
+    $default  reduce using rule 68 (proposition)
+
+
+state 46
+
+   69 proposition: executability .
+
+    $default  reduce using rule 69 (proposition)
+
+
+state 47
+
+   71 proposition: determine .
+
+    $default  reduce using rule 71 (proposition)
+
+
+state 48
+
+   72 proposition: announcement .
+
+    $default  reduce using rule 72 (proposition)
+
+
+state 49
+
+   74 proposition: awareness .
+
+    $default  reduce using rule 74 (proposition)
+
+
+state 50
+
+   73 proposition: observance .
+
+    $default  reduce using rule 73 (proposition)
+
+
+state 51
+
+   70 proposition: impossibility .
+
+    $default  reduce using rule 70 (proposition)
+
+
+state 52
+
+   76 domain: domain proposition .
+
+    $default  reduce using rule 76 (domain)
+
+
+state 53
+
+    2 input: fluent_decls action_decls agent_decls domain init_spec . goal_spec
+   79 init_spec: init_spec . init
+
+    INIT  shift, and go to state 75
+
+    $default  reduce using rule 81 (goal_spec)
+
+    init       go to state 76
+    goal_spec  go to state 77
+
+
+state 54
+
+   16 param_list: param_list COMMA . param
+
+    ID      shift, and go to state 7
+    NUMBER  shift, and go to state 24
+
+    id        go to state 25
+    constant  go to state 26
+    param     go to state 78
+
+
+state 55
+
+    7 fluent: id LEFT_PAREN param_list RIGHT_PAREN .
+
+    $default  reduce using rule 7 (fluent)
+
+
+state 56
+
+   26 executor: id .
+
+    $default  reduce using rule 26 (executor)
+
+
+state 57
+
+   22 action: id LEFT_BRAC executors . RIGHT_BRAC
+   23       | id LEFT_BRAC executors . RIGHT_BRAC LEFT_PAREN observers RIGHT_PAREN
+   25 executors: executors . COMMA executor
+
+    COMMA       shift, and go to state 79
+    RIGHT_BRAC  shift, and go to state 80
+
+
+state 58
+
+   24 executors: executor .
+
+    $default  reduce using rule 24 (executors)
+
+
+state 59
+
+   21 action_list: action_list COMMA action .
+
+    $default  reduce using rule 21 (action_list)
+
+
+state 60
+
+   39 agent: id LEFT_PAREN . param_list RIGHT_PAREN
+
+    ID      shift, and go to state 7
+    NUMBER  shift, and go to state 24
+
+    id          go to state 25
+    constant    go to state 26
+    param       go to state 27
+    param_list  go to state 81
+
+
+state 61
+
+   41 agent_list: agent_list COMMA . agent
+
+    ID  shift, and go to state 7
+
+    id     go to state 32
+    agent  go to state 82
+
+
+state 62
+
+   42 agent_decl: AGENT agent_list SEMICOLON .
+
+    $default  reduce using rule 42 (agent_decl)
+
+
+state 63
+
+   31 literal: NEGATION fluent .
+
+    $default  reduce using rule 31 (literal)
+
+
+state 64
+
+   61 executability: EXECUTABLE action . if_part_bf SEMICOLON
+
+    IF  shift, and go to state 83
+
+    $default  reduce using rule 47 (if_part_bf)
+
+    if_part_bf  go to state 84
+
+
+state 65
+
+   66 impossibility: IMPOSSIBLE action . if_part SEMICOLON
+
+    IF  shift, and go to state 71
+
+    $default  reduce using rule 45 (if_part)
+
+    if_part  go to state 85
+
+
+state 66
+
+    7 fluent: id LEFT_PAREN . param_list RIGHT_PAREN
+   39 agent: id LEFT_PAREN . param_list RIGHT_PAREN
+
+    ID      shift, and go to state 7
+    NUMBER  shift, and go to state 24
+
+    id          go to state 25
+    constant    go to state 26
+    param       go to state 27
+    param_list  go to state 86
+
+
+state 67
+
+   60 dynamic_law: action CAUSES . literal_list if_part_bf SEMICOLON
+
+    ID        shift, and go to state 7
+    NEGATION  shift, and go to state 35
+
+    fluent        go to state 38
+    id            go to state 10
+    literal       go to state 41
+    literal_list  go to state 87
+
+
+state 68
+
+   62 determine: action DETERMINE . fluent_det_list SEMICOLON
+
+    ID  shift, and go to state 7
+
+    fluent           go to state 88
+    fluent_det_list  go to state 89
+    id               go to state 10
+
+
+state 69
+
+   63 announcement: action ANNOUNCES . formula SEMICOLON
+
+    LEFT_PAREN  shift, and go to state 90
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+
+    fluent   go to state 38
+    id       go to state 10
+    literal  go to state 91
+    formula  go to state 92
+
+
+state 70
+
+   33 literal_list: literal_list COMMA . literal
+
+    ID        shift, and go to state 7
+    NEGATION  shift, and go to state 35
+
+    fluent   go to state 38
+    id       go to state 10
+    literal  go to state 93
+
+
+state 71
+
+   46 if_part: IF . literal_list
+
+    ID        shift, and go to state 7
+    NEGATION  shift, and go to state 35
+
+    fluent        go to state 38
+    id            go to state 10
+    literal       go to state 41
+    literal_list  go to state 94
+
+
+state 72
+
+   59 static_law: literal_list if_part . SEMICOLON
+
+    SEMICOLON  shift, and go to state 95
+
+
+state 73
+
+   64 awareness: agent AWAREOF . action if_part_fluent SEMICOLON
+
+    ID  shift, and go to state 7
+
+    id      go to state 17
+    action  go to state 96
+
+
+state 74
+
+   65 observance: agent OBSERVES . action if_part_fluent SEMICOLON
+
+    ID  shift, and go to state 7
+
+    id      go to state 17
+    action  go to state 97
+
+
+state 75
+
+   77 init: INIT . belief_formula SEMICOLON
+
+    LEFT_PAREN  shift, and go to state 98
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+    B           shift, and go to state 99
+    C           shift, and go to state 100
+    E           shift, and go to state 101
+
+    fluent          go to state 38
+    id              go to state 10
+    literal         go to state 91
+    formula         go to state 102
+    belief_formula  go to state 103
+
+
+state 76
+
+   79 init_spec: init_spec init .
+
+    $default  reduce using rule 79 (init_spec)
+
+
+state 77
+
+    2 input: fluent_decls action_decls agent_decls domain init_spec goal_spec .
+   82 goal_spec: goal_spec . goal
+
+    GOAL  shift, and go to state 104
+
+    $default  reduce using rule 2 (input)
+
+    goal  go to state 105
+
+
+state 78
+
+   16 param_list: param_list COMMA param .
+
+    $default  reduce using rule 16 (param_list)
+
+
+state 79
+
+   25 executors: executors COMMA . executor
+
+    ID  shift, and go to state 7
+
+    id        go to state 56
+    executor  go to state 106
+
+
+state 80
+
+   22 action: id LEFT_BRAC executors RIGHT_BRAC .
+   23       | id LEFT_BRAC executors RIGHT_BRAC . LEFT_PAREN observers RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 107
+
+    $default  reduce using rule 22 (action)
+
+
+state 81
+
+   16 param_list: param_list . COMMA param
+   39 agent: id LEFT_PAREN param_list . RIGHT_PAREN
+
+    COMMA        shift, and go to state 54
+    RIGHT_PAREN  shift, and go to state 108
+
+
+state 82
+
+   41 agent_list: agent_list COMMA agent .
+
+    $default  reduce using rule 41 (agent_list)
+
+
+state 83
+
+   48 if_part_bf: IF . belief_formula
+
+    LEFT_PAREN  shift, and go to state 98
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+    B           shift, and go to state 99
+    C           shift, and go to state 100
+    E           shift, and go to state 101
+
+    fluent          go to state 38
+    id              go to state 10
+    literal         go to state 91
+    formula         go to state 102
+    belief_formula  go to state 109
+
+
+state 84
+
+   61 executability: EXECUTABLE action if_part_bf . SEMICOLON
+
+    SEMICOLON  shift, and go to state 110
+
+
+state 85
+
+   66 impossibility: IMPOSSIBLE action if_part . SEMICOLON
+
+    SEMICOLON  shift, and go to state 111
+
+
+state 86
+
+    7 fluent: id LEFT_PAREN param_list . RIGHT_PAREN
+   16 param_list: param_list . COMMA param
+   39 agent: id LEFT_PAREN param_list . RIGHT_PAREN
+
+    COMMA        shift, and go to state 54
+    RIGHT_PAREN  shift, and go to state 112
+
+
+state 87
+
+   33 literal_list: literal_list . COMMA literal
+   60 dynamic_law: action CAUSES literal_list . if_part_bf SEMICOLON
+
+    COMMA  shift, and go to state 70
+    IF     shift, and go to state 83
+
+    $default  reduce using rule 47 (if_part_bf)
+
+    if_part_bf  go to state 113
+
+
+state 88
+
+    8 fluent_det_list: fluent .
+
+    $default  reduce using rule 8 (fluent_det_list)
+
+
+state 89
+
+   62 determine: action DETERMINE fluent_det_list . SEMICOLON
+
+    SEMICOLON  shift, and go to state 114
+
+
+state 90
+
+   37 formula: LEFT_PAREN . formula RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 90
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+
+    fluent   go to state 38
+    id       go to state 10
+    literal  go to state 91
+    formula  go to state 115
+
+
+state 91
+
+   34 formula: literal .
+
+    $default  reduce using rule 34 (formula)
+
+
+state 92
+
+   35 formula: formula . COMMA formula
+   36        | formula . OR formula
+   63 announcement: action ANNOUNCES formula . SEMICOLON
+
+    OR         shift, and go to state 116
+    COMMA      shift, and go to state 117
+    SEMICOLON  shift, and go to state 118
+
+
+state 93
+
+   33 literal_list: literal_list COMMA literal .
+
+    $default  reduce using rule 33 (literal_list)
+
+
+state 94
+
+   33 literal_list: literal_list . COMMA literal
+   46 if_part: IF literal_list .
+
+    COMMA  shift, and go to state 70
+
+    $default  reduce using rule 46 (if_part)
+
+
+state 95
+
+   59 static_law: literal_list if_part SEMICOLON .
+
+    $default  reduce using rule 59 (static_law)
+
+
+state 96
+
+   64 awareness: agent AWAREOF action . if_part_fluent SEMICOLON
+
+    IF  shift, and go to state 119
+
+    $default  reduce using rule 57 (if_part_fluent)
+
+    if_part_fluent  go to state 120
+
+
+state 97
+
+   65 observance: agent OBSERVES action . if_part_fluent SEMICOLON
+
+    IF  shift, and go to state 119
+
+    $default  reduce using rule 57 (if_part_fluent)
+
+    if_part_fluent  go to state 121
+
+
+state 98
+
+   37 formula: LEFT_PAREN . formula RIGHT_PAREN
+   53 belief_formula: LEFT_PAREN . NEGATION belief_formula RIGHT_PAREN
+   54               | LEFT_PAREN . belief_formula RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 98
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 122
+    B           shift, and go to state 99
+    C           shift, and go to state 100
+    E           shift, and go to state 101
+
+    fluent          go to state 38
+    id              go to state 10
+    literal         go to state 91
+    formula         go to state 123
+    belief_formula  go to state 124
+
+
+state 99
+
+   50 belief_formula: B . LEFT_PAREN agent COMMA belief_formula RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 125
+
+
+state 100
+
+   56 belief_formula: C . LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC COMMA belief_formula RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 126
+
+
+state 101
+
+   55 belief_formula: E . LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC COMMA belief_formula RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 127
+
+
+state 102
+
+   35 formula: formula . COMMA formula
+   36        | formula . OR formula
+   49 belief_formula: formula .
+
+    OR     shift, and go to state 116
+    COMMA  shift, and go to state 117
+
+    OR        [reduce using rule 49 (belief_formula)]
+    COMMA     [reduce using rule 49 (belief_formula)]
+    $default  reduce using rule 49 (belief_formula)
+
+
+state 103
+
+   51 belief_formula: belief_formula . COMMA belief_formula
+   52               | belief_formula . OR belief_formula
+   77 init: INIT belief_formula . SEMICOLON
+
+    OR         shift, and go to state 128
+    COMMA      shift, and go to state 129
+    SEMICOLON  shift, and go to state 130
+
+
+state 104
+
+   80 goal: GOAL . belief_formula SEMICOLON
+
+    LEFT_PAREN  shift, and go to state 98
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+    B           shift, and go to state 99
+    C           shift, and go to state 100
+    E           shift, and go to state 101
+
+    fluent          go to state 38
+    id              go to state 10
+    literal         go to state 91
+    formula         go to state 102
+    belief_formula  go to state 131
+
+
+state 105
+
+   82 goal_spec: goal_spec goal .
+
+    $default  reduce using rule 82 (goal_spec)
+
+
+state 106
+
+   25 executors: executors COMMA executor .
+
+    $default  reduce using rule 25 (executors)
+
+
+state 107
+
+   23 action: id LEFT_BRAC executors RIGHT_BRAC LEFT_PAREN . observers RIGHT_PAREN
+
+    ID  shift, and go to state 7
+
+    id         go to state 132
+    observers  go to state 133
+    observer   go to state 134
+
+
+state 108
+
+   39 agent: id LEFT_PAREN param_list RIGHT_PAREN .
+
+    $default  reduce using rule 39 (agent)
+
+
+state 109
+
+   48 if_part_bf: IF belief_formula .
+   51 belief_formula: belief_formula . COMMA belief_formula
+   52               | belief_formula . OR belief_formula
+
+    OR     shift, and go to state 128
+    COMMA  shift, and go to state 129
+
+    $default  reduce using rule 48 (if_part_bf)
+
+
+state 110
+
+   61 executability: EXECUTABLE action if_part_bf SEMICOLON .
+
+    $default  reduce using rule 61 (executability)
+
+
+state 111
+
+   66 impossibility: IMPOSSIBLE action if_part SEMICOLON .
+
+    $default  reduce using rule 66 (impossibility)
+
+
+state 112
+
+    7 fluent: id LEFT_PAREN param_list RIGHT_PAREN .
+   39 agent: id LEFT_PAREN param_list RIGHT_PAREN .
+
+    AWAREOF   reduce using rule 39 (agent)
+    OBSERVES  reduce using rule 39 (agent)
+    $default  reduce using rule 7 (fluent)
+
+
+state 113
+
+   60 dynamic_law: action CAUSES literal_list if_part_bf . SEMICOLON
+
+    SEMICOLON  shift, and go to state 135
+
+
+state 114
+
+   62 determine: action DETERMINE fluent_det_list SEMICOLON .
+
+    $default  reduce using rule 62 (determine)
+
+
+state 115
+
+   35 formula: formula . COMMA formula
+   36        | formula . OR formula
+   37        | LEFT_PAREN formula . RIGHT_PAREN
+
+    OR           shift, and go to state 116
+    COMMA        shift, and go to state 117
+    RIGHT_PAREN  shift, and go to state 136
+
+
+state 116
+
+   36 formula: formula OR . formula
+
+    LEFT_PAREN  shift, and go to state 90
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+
+    fluent   go to state 38
+    id       go to state 10
+    literal  go to state 91
+    formula  go to state 137
+
+
+state 117
+
+   35 formula: formula COMMA . formula
+
+    LEFT_PAREN  shift, and go to state 90
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+
+    fluent   go to state 38
+    id       go to state 10
+    literal  go to state 91
+    formula  go to state 138
+
+
+state 118
+
+   63 announcement: action ANNOUNCES formula SEMICOLON .
+
+    $default  reduce using rule 63 (announcement)
+
+
+state 119
+
+   58 if_part_fluent: IF . formula
+
+    LEFT_PAREN  shift, and go to state 90
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+
+    fluent   go to state 38
+    id       go to state 10
+    literal  go to state 91
+    formula  go to state 139
+
+
+state 120
+
+   64 awareness: agent AWAREOF action if_part_fluent . SEMICOLON
+
+    SEMICOLON  shift, and go to state 140
+
+
+state 121
+
+   65 observance: agent OBSERVES action if_part_fluent . SEMICOLON
+
+    SEMICOLON  shift, and go to state 141
+
+
+state 122
+
+   31 literal: NEGATION . fluent
+   53 belief_formula: LEFT_PAREN NEGATION . belief_formula RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 98
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+    B           shift, and go to state 99
+    C           shift, and go to state 100
+    E           shift, and go to state 101
+
+    fluent          go to state 142
+    id              go to state 10
+    literal         go to state 91
+    formula         go to state 102
+    belief_formula  go to state 143
+
+
+state 123
+
+   35 formula: formula . COMMA formula
+   36        | formula . OR formula
+   37        | LEFT_PAREN formula . RIGHT_PAREN
+   49 belief_formula: formula .
+
+    OR           shift, and go to state 116
+    COMMA        shift, and go to state 117
+    RIGHT_PAREN  shift, and go to state 136
+
+    OR           [reduce using rule 49 (belief_formula)]
+    COMMA        [reduce using rule 49 (belief_formula)]
+    RIGHT_PAREN  [reduce using rule 49 (belief_formula)]
+
+
+state 124
+
+   51 belief_formula: belief_formula . COMMA belief_formula
+   52               | belief_formula . OR belief_formula
+   54               | LEFT_PAREN belief_formula . RIGHT_PAREN
+
+    OR           shift, and go to state 128
+    COMMA        shift, and go to state 129
+    RIGHT_PAREN  shift, and go to state 144
+
+
+state 125
+
+   50 belief_formula: B LEFT_PAREN . agent COMMA belief_formula RIGHT_PAREN
+
+    ID  shift, and go to state 7
+
+    id     go to state 32
+    agent  go to state 145
+
+
+state 126
+
+   56 belief_formula: C LEFT_PAREN . LEFT_BRAC agent_list RIGHT_BRAC COMMA belief_formula RIGHT_PAREN
+
+    LEFT_BRAC  shift, and go to state 146
+
+
+state 127
+
+   55 belief_formula: E LEFT_PAREN . LEFT_BRAC agent_list RIGHT_BRAC COMMA belief_formula RIGHT_PAREN
+
+    LEFT_BRAC  shift, and go to state 147
+
+
+state 128
+
+   52 belief_formula: belief_formula OR . belief_formula
+
+    LEFT_PAREN  shift, and go to state 98
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+    B           shift, and go to state 99
+    C           shift, and go to state 100
+    E           shift, and go to state 101
+
+    fluent          go to state 38
+    id              go to state 10
+    literal         go to state 91
+    formula         go to state 102
+    belief_formula  go to state 148
+
+
+state 129
+
+   51 belief_formula: belief_formula COMMA . belief_formula
+
+    LEFT_PAREN  shift, and go to state 98
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+    B           shift, and go to state 99
+    C           shift, and go to state 100
+    E           shift, and go to state 101
+
+    fluent          go to state 38
+    id              go to state 10
+    literal         go to state 91
+    formula         go to state 102
+    belief_formula  go to state 149
+
+
+state 130
+
+   77 init: INIT belief_formula SEMICOLON .
+
+    $default  reduce using rule 77 (init)
+
+
+state 131
+
+   51 belief_formula: belief_formula . COMMA belief_formula
+   52               | belief_formula . OR belief_formula
+   80 goal: GOAL belief_formula . SEMICOLON
+
+    OR         shift, and go to state 128
+    COMMA      shift, and go to state 129
+    SEMICOLON  shift, and go to state 150
+
+
+state 132
+
+   29 observer: id .
+
+    $default  reduce using rule 29 (observer)
+
+
+state 133
+
+   23 action: id LEFT_BRAC executors RIGHT_BRAC LEFT_PAREN observers . RIGHT_PAREN
+   28 observers: observers . COMMA observer
+
+    COMMA        shift, and go to state 151
+    RIGHT_PAREN  shift, and go to state 152
+
+
+state 134
+
+   27 observers: observer .
+
+    $default  reduce using rule 27 (observers)
+
+
+state 135
+
+   60 dynamic_law: action CAUSES literal_list if_part_bf SEMICOLON .
+
+    $default  reduce using rule 60 (dynamic_law)
+
+
+state 136
+
+   37 formula: LEFT_PAREN formula RIGHT_PAREN .
+
+    $default  reduce using rule 37 (formula)
+
+
+state 137
+
+   35 formula: formula . COMMA formula
+   36        | formula . OR formula
+   36        | formula OR formula .
+
+    COMMA  shift, and go to state 117
+
+    $default  reduce using rule 36 (formula)
+
+
+state 138
+
+   35 formula: formula . COMMA formula
+   35        | formula COMMA formula .
+   36        | formula . OR formula
+
+    $default  reduce using rule 35 (formula)
+
+
+state 139
+
+   35 formula: formula . COMMA formula
+   36        | formula . OR formula
+   58 if_part_fluent: IF formula .
+
+    OR     shift, and go to state 116
+    COMMA  shift, and go to state 117
+
+    $default  reduce using rule 58 (if_part_fluent)
+
+
+state 140
+
+   64 awareness: agent AWAREOF action if_part_fluent SEMICOLON .
+
+    $default  reduce using rule 64 (awareness)
+
+
+state 141
+
+   65 observance: agent OBSERVES action if_part_fluent SEMICOLON .
+
+    $default  reduce using rule 65 (observance)
+
+
+state 142
+
+   30 literal: fluent .
+   31        | NEGATION fluent .
+
+    OR           reduce using rule 30 (literal)
+    OR           [reduce using rule 31 (literal)]
+    COMMA        reduce using rule 30 (literal)
+    COMMA        [reduce using rule 31 (literal)]
+    RIGHT_PAREN  reduce using rule 30 (literal)
+    RIGHT_PAREN  [reduce using rule 31 (literal)]
+    $default     reduce using rule 30 (literal)
+
+
+state 143
+
+   51 belief_formula: belief_formula . COMMA belief_formula
+   52               | belief_formula . OR belief_formula
+   53               | LEFT_PAREN NEGATION belief_formula . RIGHT_PAREN
+
+    OR           shift, and go to state 128
+    COMMA        shift, and go to state 129
+    RIGHT_PAREN  shift, and go to state 153
+
+
+state 144
+
+   54 belief_formula: LEFT_PAREN belief_formula RIGHT_PAREN .
+
+    $default  reduce using rule 54 (belief_formula)
+
+
+state 145
+
+   50 belief_formula: B LEFT_PAREN agent . COMMA belief_formula RIGHT_PAREN
+
+    COMMA  shift, and go to state 154
+
+
+state 146
+
+   56 belief_formula: C LEFT_PAREN LEFT_BRAC . agent_list RIGHT_BRAC COMMA belief_formula RIGHT_PAREN
+
+    ID  shift, and go to state 7
+
+    id          go to state 32
+    agent       go to state 33
+    agent_list  go to state 155
+
+
+state 147
+
+   55 belief_formula: E LEFT_PAREN LEFT_BRAC . agent_list RIGHT_BRAC COMMA belief_formula RIGHT_PAREN
+
+    ID  shift, and go to state 7
+
+    id          go to state 32
+    agent       go to state 33
+    agent_list  go to state 156
+
+
+state 148
+
+   51 belief_formula: belief_formula . COMMA belief_formula
+   52               | belief_formula . OR belief_formula
+   52               | belief_formula OR belief_formula .
+
+    COMMA  shift, and go to state 129
+
+    $default  reduce using rule 52 (belief_formula)
+
+
+state 149
+
+   51 belief_formula: belief_formula . COMMA belief_formula
+   51               | belief_formula COMMA belief_formula .
+   52               | belief_formula . OR belief_formula
+
+    $default  reduce using rule 51 (belief_formula)
+
+
+state 150
+
+   80 goal: GOAL belief_formula SEMICOLON .
+
+    $default  reduce using rule 80 (goal)
+
+
+state 151
+
+   28 observers: observers COMMA . observer
+
+    ID  shift, and go to state 7
+
+    id        go to state 132
+    observer  go to state 157
+
+
+state 152
+
+   23 action: id LEFT_BRAC executors RIGHT_BRAC LEFT_PAREN observers RIGHT_PAREN .
+
+    $default  reduce using rule 23 (action)
+
+
+state 153
+
+   53 belief_formula: LEFT_PAREN NEGATION belief_formula RIGHT_PAREN .
+
+    $default  reduce using rule 53 (belief_formula)
+
+
+state 154
+
+   50 belief_formula: B LEFT_PAREN agent COMMA . belief_formula RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 98
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+    B           shift, and go to state 99
+    C           shift, and go to state 100
+    E           shift, and go to state 101
+
+    fluent          go to state 38
+    id              go to state 10
+    literal         go to state 91
+    formula         go to state 102
+    belief_formula  go to state 158
+
+
+state 155
+
+   41 agent_list: agent_list . COMMA agent
+   56 belief_formula: C LEFT_PAREN LEFT_BRAC agent_list . RIGHT_BRAC COMMA belief_formula RIGHT_PAREN
+
+    COMMA       shift, and go to state 61
+    RIGHT_BRAC  shift, and go to state 159
+
+
+state 156
+
+   41 agent_list: agent_list . COMMA agent
+   55 belief_formula: E LEFT_PAREN LEFT_BRAC agent_list . RIGHT_BRAC COMMA belief_formula RIGHT_PAREN
+
+    COMMA       shift, and go to state 61
+    RIGHT_BRAC  shift, and go to state 160
+
+
+state 157
+
+   28 observers: observers COMMA observer .
+
+    $default  reduce using rule 28 (observers)
+
+
+state 158
+
+   50 belief_formula: B LEFT_PAREN agent COMMA belief_formula . RIGHT_PAREN
+   51               | belief_formula . COMMA belief_formula
+   52               | belief_formula . OR belief_formula
+
+    OR           shift, and go to state 128
+    COMMA        shift, and go to state 129
+    RIGHT_PAREN  shift, and go to state 161
+
+
+state 159
+
+   56 belief_formula: C LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC . COMMA belief_formula RIGHT_PAREN
+
+    COMMA  shift, and go to state 162
+
+
+state 160
+
+   55 belief_formula: E LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC . COMMA belief_formula RIGHT_PAREN
+
+    COMMA  shift, and go to state 163
+
+
+state 161
+
+   50 belief_formula: B LEFT_PAREN agent COMMA belief_formula RIGHT_PAREN .
+
+    $default  reduce using rule 50 (belief_formula)
+
+
+state 162
+
+   56 belief_formula: C LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC COMMA . belief_formula RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 98
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+    B           shift, and go to state 99
+    C           shift, and go to state 100
+    E           shift, and go to state 101
+
+    fluent          go to state 38
+    id              go to state 10
+    literal         go to state 91
+    formula         go to state 102
+    belief_formula  go to state 164
+
+
+state 163
+
+   55 belief_formula: E LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC COMMA . belief_formula RIGHT_PAREN
+
+    LEFT_PAREN  shift, and go to state 98
+    ID          shift, and go to state 7
+    NEGATION    shift, and go to state 35
+    B           shift, and go to state 99
+    C           shift, and go to state 100
+    E           shift, and go to state 101
+
+    fluent          go to state 38
+    id              go to state 10
+    literal         go to state 91
+    formula         go to state 102
+    belief_formula  go to state 165
+
+
+state 164
+
+   51 belief_formula: belief_formula . COMMA belief_formula
+   52               | belief_formula . OR belief_formula
+   56               | C LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC COMMA belief_formula . RIGHT_PAREN
+
+    OR           shift, and go to state 128
+    COMMA        shift, and go to state 129
+    RIGHT_PAREN  shift, and go to state 166
+
+
+state 165
+
+   51 belief_formula: belief_formula . COMMA belief_formula
+   52               | belief_formula . OR belief_formula
+   55               | E LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC COMMA belief_formula . RIGHT_PAREN
+
+    OR           shift, and go to state 128
+    COMMA        shift, and go to state 129
+    RIGHT_PAREN  shift, and go to state 167
+
+
+state 166
+
+   56 belief_formula: C LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC COMMA belief_formula RIGHT_PAREN .
+
+    $default  reduce using rule 56 (belief_formula)
+
+
+state 167
+
+   55 belief_formula: E LEFT_PAREN LEFT_BRAC agent_list RIGHT_BRAC COMMA belief_formula RIGHT_PAREN .
+
+    $default  reduce using rule 55 (belief_formula)

@@ -1,0 +1,195 @@
+%%% Executed actions: open_a peek_a %%%
+
+fluent tail, has_key_a, has_key_b, has_key_c, opened ,looking_a, looking_b, looking_c;
+
+action open[a], open[b] ,open[c];
+action peek[a], peek[b], peek[c]; 
+action signal[a](b), signal[a](c), signal[b](a), signal[b](c), signal[c](a), signal[c](b);
+action distract[a](b), distract[a](c), distract[b](a), distract[b](c), distract[c](a), distract[c](b);
+action shout_tail[a], shout_tail[b], shout_tail[c];
+action lie_head[a], lie_head[b], lie_head[c];
+
+agent a,b,c;
+
+
+
+executable open[a] if B(a,has_key_a), has_key_a;
+open[a] causes opened;
+b observes open[a] if looking_b;
+c observes open[a] if looking_c;
+a observes open[a];
+
+executable open[b] if B(b,has_key_b), has_key_b;
+open[b] causes opened;
+c observes open[b] if looking_c;
+a observes open[b] if looking_a;
+b observes open[b];
+
+executable open[c] if B(c,has_key_c), has_key_c;
+open[c] causes opened;
+a observes open[c] if looking_a;
+b observes open[c] if looking_b;
+c observes open[c];
+
+
+
+executable peek[a] if B(a,opened), B(a,looking_a), looking_a, opened;
+peek[a] determines tail;
+b aware_of peek[a] if looking_b;
+c aware_of peek[a] if looking_c;
+a observes peek[a];
+
+executable peek[b] if B(b,opened), B(b,looking_b), looking_b, opened;
+peek[b] determines tail;
+a aware_of peek[b] if looking_a;
+c aware_of peek[b] if looking_c;
+b observes peek[b];
+
+executable peek[c] if B(c,opened), B(c,looking_c), looking_c, opened;
+peek[c] determines tail;
+a aware_of peek[c] if looking_a;
+b aware_of peek[c] if looking_b;
+c observes peek[c];
+
+
+
+executable signal[a](b) if  B(a, looking_a), B(a, -looking_b), looking_a, -looking_b;
+signal[a](b) causes looking_b;
+b observes signal[a](b);
+a observes signal[a](b);
+
+
+executable signal[a](c) if  B(a, looking_a), B(a, -looking_c), looking_a, -looking_c;
+signal[a](c) causes looking_c;
+a observes signal[a](c);
+c observes signal[a](c);
+
+
+executable signal[b](a) if  B(b, looking_b), B(b, -looking_a), looking_b, -looking_a;
+signal[b](a) causes looking_a;
+b observes signal[b](a);
+a observes signal[b](a);
+
+
+executable signal[b](c) if  B(b, looking_b), B(b, -looking_c), looking_b, -looking_c;
+signal[b](c) causes looking_c;
+c observes signal[b](c);
+b observes signal[b](c);
+a observes signal[b](c);
+
+executable signal[c](a) if  B(c, looking_c), B(c, -looking_a), looking_c, -looking_a;
+signal[c](a) causes looking_a;
+c observes signal[c](a);
+a observes signal[c](a);
+
+
+executable signal[c](b) if  B(c, looking_c), B(c, -looking_b), looking_c, -looking_b;
+signal[c](b) causes looking_b;
+c observes signal[c](b);
+b observes signal[c](b);
+
+
+
+
+executable distract[a](b) if B(a,looking_a), B(a, looking_b), looking_a, looking_b;
+distract[a](b) causes -looking_b;
+a observes distract[a](b);
+b observes distract[a](b);
+
+
+executable distract[a](c) if B(a,looking_a), B(a, looking_c), looking_a, looking_c;
+distract[a](c) causes -looking_c;
+a observes distract[a](c);
+c observes distract[a](c);
+
+
+executable distract[b](a) if B(b,looking_b), B(b, looking_a), looking_b, looking_a;
+distract[b](a) causes -looking_a;
+a observes distract[b](a);
+b observes distract[b](a);
+
+
+executable distract[b](c) if B(b,looking_b), B(b, looking_c), looking_b, looking_c;
+distract[b](c) causes -looking_c;
+b observes distract[b](c);
+c observes distract[b](c);
+
+
+executable distract[c](a) if B(c,looking_c), B(c, looking_a), looking_c, looking_a;
+distract[c](a) causes -looking_a;
+a observes distract[c](a);
+c observes distract[c](a);
+
+
+executable distract[c](b) if B(c,looking_c), B(c, looking_b), looking_c, looking_b;
+distract[c](b) causes -looking_b;
+c observes distract[c](b);
+b observes distract[c](b);
+
+
+
+
+executable shout_tail[a] if B(a,tail), tail;
+shout_tail[a] announces tail;
+a observes shout_tail[a];
+b observes shout_tail[a] if looking_b;
+c observes shout_tail[a] if looking_c;
+
+
+executable shout_tail[b] if B(b,tail), tail;
+shout_tail[b] announces tail;
+b observes shout_tail[b];
+a observes shout_tail[b] if looking_a;
+c observes shout_tail[b] if looking_c;
+
+
+executable shout_tail[c] if B(c,tail), tail;
+shout_tail[c] announces tail;
+c observes shout_tail[c];
+a observes shout_tail[c] if looking_a;
+b observes shout_tail[c] if looking_b;
+
+
+
+executable lie_head[a] if B(a,tail), tail;
+lie_head[a] announces -tail;
+a observes lie_head[a];
+b observes lie_head[a] if looking_b;
+c observes lie_head[a] if looking_c;
+
+
+executable lie_head[b] if B(b,tail), tail;
+lie_head[b] announces -tail;
+b observes lie_head[b];
+a observes lie_head[b] if looking_a;
+c observes lie_head[b] if looking_c;
+
+
+executable lie_head[c] if B(c,tail), tail;
+lie_head[c] announces -tail;
+c observes lie_head[c];
+a observes lie_head[c] if looking_a;
+b observes lie_head[c] if looking_b;
+
+
+initially C([a,b,c],has_key_a);
+initially C([a,b,c],-has_key_b);
+initially C([a,b,c],-has_key_c);
+initially C([a,b,c],-opened);
+%initially C([a,b,c],-B(a,tail) , -B(a,(-tail));
+%initially C([a,b,c],-B(b,tail) , -B(b,(-tail));
+%initially C([a,b,c],-B(c,tail) , -B(c,(-tail));
+initially C([a,b,c], looking_a);
+initially C([a,b,c], looking_b);
+initially C([a,b,c], looking_c);
+initially tail, has_key_a, -has_key_b, -has_key_c, -opened, looking_a, looking_b, looking_c;
+%initially C([a,b,c],B(a,tail));
+
+% 2 actions
+%goal -looking_c;
+goal B(c, -opened);
+goal B(b, B(c, opened));
+goal B(a, tail);
+goal B(b , B(a, tail) | B(a, -tail));
+goal B(b, C([a,b,c], tail));
+

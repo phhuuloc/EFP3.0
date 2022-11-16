@@ -1,0 +1,168 @@
+%%% Executed actions: left sense left lef left shout_7 %%%
+
+fluent q, at_1, at_2, at_3, at_4, at_5, at_6, at_7, at_8, at_9, at_10, at_11;
+
+action right[a], left[a], sense[a], shout_1[a], shout_2[a], shout_3[a], shout_4[a], shout_5[a], shout_6[a], shout_7[a], shout_8[a], shout_9[a], shout_10[a], shout_11[a];
+
+agent a,b,c,d,e,f,g,h,j;
+
+%f in 1
+
+%b in 2
+%c in 3
+%d in 5
+%e in 6
+%g in 7
+%h,j in 10
+
+executable right[a] if -at_11;
+right[a] causes at_2 if at_1;
+right[a] causes -at_1 if at_1;
+right[a] causes at_3 if at_2;
+right[a] causes -at_2 if at_2;
+right[a] causes at_4 if at_3;
+right[a] causes -at_3 if at_3;
+right[a] causes at_5 if at_4;
+right[a] causes -at_4 if at_4;
+right[a] causes at_6 if at_5;
+right[a] causes -at_5 if at_5;
+right[a] causes at_7 if at_6;
+right[a] causes -at_6 if at_6;
+right[a] causes at_8 if at_7;
+right[a] causes -at_7 if at_7;
+right[a] causes at_9 if at_8;
+right[a] causes -at_8 if at_8;
+right[a] causes at_10 if at_9;
+right[a] causes -at_9 if at_9;
+right[a] causes at_11 if at_10;
+right[a] causes -at_10 if at_10;
+
+a observes right[a];
+b observes right[a];
+c observes right[a];
+d observes right[a];
+e observes right[a];
+f observes right[a];
+g observes right[a];
+h observes right[a];
+j observes right[a];
+
+executable left[a] if -at_1;
+left[a] causes at_10 if at_11;
+left[a] causes -at_11 if at_11;
+left[a] causes at_9 if at_10;
+left[a] causes -at_10 if at_10;
+left[a] causes at_8 if at_9;
+left[a] causes -at_9 if at_9;
+left[a] causes at_7 if at_8;
+left[a] causes -at_8 if at_8;
+left[a] causes at_6 if at_7;
+left[a] causes -at_7 if at_7;
+left[a] causes at_5 if at_6;
+left[a] causes -at_6 if at_6;
+left[a] causes at_4 if at_5;
+left[a] causes -at_5 if at_5;
+left[a] causes at_3 if at_4;
+left[a] causes -at_4 if at_4;
+left[a] causes at_2 if at_3;
+left[a] causes -at_3 if at_3;
+left[a] causes at_1 if at_2;
+left[a] causes -at_2 if at_2;
+
+
+a observes left[a];
+b observes left[a];
+c observes left[a];
+d observes left[a];
+e observes left[a];
+f observes left[a];
+g observes left[a];
+h observes left[a];
+j observes left[a];
+
+executable sense[a] if at_10;
+sense[a] determines q;
+a observes sense[a];
+
+executable shout_1[a] if B(a, q), at_1;
+shout_1[a] announces q;
+a observes shout_1[a];
+b observes shout_1[a];
+
+executable shout_2[a] if B(a, q), at_2;
+shout_2[a] announces q;
+a observes shout_2[a];
+b observes shout_2[a];
+c observes shout_2[a];
+
+executable shout_3[a] if B(a, q), at_3;
+shout_3[a] announces q;
+b observes shout_3[a];
+c observes shout_3[a];
+d observes shout_3[a];
+
+executable shout_4[a] if B(a, q), at_4;
+shout_4[a] announces q;
+c observes shout_4[a];
+d observes shout_4[a];
+e observes shout_4[a];
+
+executable shout_5[a] if B(a, q), at_5;
+shout_5[a] announces q;
+d observes shout_5[a];
+e observes shout_5[a];
+f observes shout_5[a];
+
+
+executable shout_6[a] if B(a, q), at_6;
+shout_6[a] announces q;
+e observes shout_6[a];
+f observes shout_6[a]; 
+g observes shout_6[a];
+
+
+executable shout_7[a] if B(a, q), at_7;
+shout_7[a] announces q;
+f observes shout_7[a];
+g observes shout_7[a];
+h observes shout_7[a];
+
+executable shout_8[a] if B(a, q), at_8;
+shout_8[a] announces q;
+j observes shout_8[a];
+g observes shout_8[a];
+h observes shout_8[a];
+
+executable shout_9[a] if B(a, q), at_9;
+shout_9[a] announces q;
+j observes shout_9[a];
+h observes shout_9[a];
+
+executable shout_10[a] if B(a, q), at_10;
+shout_10[a] announces q;
+
+executable shout_11[a] if B(a, q), at_11;
+shout_11[a] announces q;
+
+
+
+
+initially -at_1, -at_2, -at_3, -at_4, -at_5, -at_6, -at_7, -at_8, -at_9, -at_10, at_11, q;
+initially C([a,b,c,d,e,f,g,h,j],-at_1);
+initially C([a,b,c,d,e,f,g,h,j],-at_2);
+initially C([a,b,c,d,e,f,g,h,j],-at_3);
+initially C([a,b,c,d,e,f,g,h,j],-at_4);
+initially C([a,b,c,d,e,f,g,h,j],-at_5);
+initially C([a,b,c,d,e,f,g,h,j],-at_6);
+initially C([a,b,c,d,e,f,g,h,j],-at_7);
+initially C([a,b,c,d,e,f,g,h,j],-at_8);
+initially C([a,b,c,d,e,f,g,h,j],-at_9);
+initially C([a,b,c,d,e,f,g,h,j],-at_10);
+initially C([a,b,c,d,e,f,g,h,j],at_11);
+
+% 7 actions
+%goal B(a,q);
+%goal B(h,q);
+%goal B(j,q);
+%goal B(g,q);
+goal B(f,q);

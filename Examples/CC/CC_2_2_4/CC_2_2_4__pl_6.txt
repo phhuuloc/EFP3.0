@@ -1,0 +1,181 @@
+%%% Executed actions: left[b] check_b1_1[b] right[a] check_b2_3[a] left[a] tell_b2_3[a] %%%
+
+fluent at_a_1, at_a_2, at_a_3, at_a_4, at_b_1, at_b_2, at_b_3, at_b_4, at_b1_1, at_b1_3, at_b1_4, at_b2_1, at_b2_3, at_b2_4;
+
+action right[a], left[a], right[b], left[b], check_b1_1[a], check_b2_1[a], check_b1_3[a], check_b2_3[a], check_b1_4[a], check_b2_4[a], check_b1_1[b], check_b2_1[b], check_b1_3[b], check_b2_3[b], check_b1_4[b], check_b2_4[b], tell_b1_1[a], tell_b2_1[a], tell_b1_1[b], tell_b2_1[b], tell_b1_3[a], tell_b2_3[a], tell_b1_3[b], tell_b2_3[b], tell_b1_4[a], tell_b2_4[a], tell_b1_4[b], tell_b2_4[b];
+
+agent a,b;
+
+executable left[a] if B(a, -at_a_1);
+left[a] causes -at_a_2 if at_a_2;
+left[a] causes -at_a_3 if at_a_3;
+left[a] causes -at_a_4 if at_a_4;
+left[a] causes at_a_1 if at_a_2;
+left[a] causes at_a_2 if at_a_3;
+left[a] causes at_a_3 if at_a_4;
+a observes left[a];
+b observes left[a];
+
+executable right[a] if B(a, -at_a_4);
+right[a] causes -at_a_1 if at_a_1;
+right[a] causes -at_a_2 if at_a_2;
+right[a] causes -at_a_3 if at_a_3;
+right[a] causes at_a_2 if at_a_1;
+right[a] causes at_a_3 if at_a_2;
+right[a] causes at_a_4 if at_a_3;
+a observes right[a];
+b observes right[a];
+
+executable left[b] if B(b, -at_b_1);
+left[b] causes -at_b_2 if at_b_2;
+left[b] causes -at_b_3 if at_b_3;
+left[b] causes -at_b_4 if at_b_4;
+left[b] causes at_b_1 if at_b_2;
+left[b] causes at_b_2 if at_b_3;
+left[b] causes at_b_3 if at_b_4;
+b observes left[b];
+a observes left[b];
+
+executable right[b] if B(a, -at_b_4);
+right[b] causes -at_b_1 if at_b_1;
+right[b] causes -at_b_2 if at_b_2;
+right[b] causes -at_b_3 if at_b_3;
+right[b] causes at_b_2 if at_b_1;
+right[b] causes at_b_3 if at_b_2;
+right[b] causes at_b_4 if at_b_3;
+b observes right[b];
+a observes right[b];
+
+executable check_b1_1[a] if B(a, at_a_1);
+check_b1_1[a] determines at_b1_1;
+a observes check_b1_1[a];
+
+executable check_b2_1[a] if B(a, at_a_1);
+check_b2_1[a] determines at_b2_1;
+a observes check_b2_1[a];
+
+executable check_b1_3[a] if B(a, at_a_3);
+check_b1_3[a] determines at_b1_3;
+a observes check_b1_3[a];
+
+executable check_b2_3[a] if B(a, at_a_3);
+check_b2_3[a] determines at_b2_3;
+a observes check_b2_3[a];
+
+executable check_b1_4[a] if B(a, at_a_4);
+check_b1_4[a] determines at_b1_4;
+a observes check_b1_4[a];
+
+executable check_b2_4[a] if B(a, at_a_4);
+check_b2_4[a] determines at_b2_4;
+a observes check_b2_4[a];
+
+
+executable check_b1_1[b] if B(b, at_b_1);
+check_b1_1[b] determines at_b1_1;
+b observes check_b1_1[b];
+
+executable check_b2_1[b] if B(b, at_b_1);
+check_b2_1[b] determines at_b2_1;
+b observes check_b2_1[b];
+
+executable check_b1_3[b] if B(b, at_b_3);
+check_b1_3[b] determines at_b1_3;
+b observes check_b1_3[b];
+
+executable check_b2_3[b] if B(b, at_b_3);
+check_b2_3[b] determines at_b2_3;
+b observes check_b2_3[b];
+
+executable check_b1_4[b] if B(b, at_b_4);
+check_b1_4[b] determines at_b1_4;
+b observes check_b1_4[b];
+
+executable check_b2_4[b] if B(b, at_b_4);
+check_b2_4[b] determines at_b2_4;
+b observes check_b2_4[b];
+
+
+
+
+executable tell_b1_1[a] if B(a, at_b1_1);
+tell_b1_1[a] announces at_b1_1;
+a observes tell_b1_1[a];
+b observes tell_b1_1[a];
+
+executable tell_b1_3[a] if B(a, at_b1_3);
+tell_b1_3[a] announces at_b1_3;
+a observes tell_b1_3[a];
+b observes tell_b1_3[a];
+
+executable tell_b1_4[a] if B(a, at_b1_4);
+tell_b1_4[a] announces at_b1_4;
+a observes tell_b1_4[a];
+b observes tell_b1_4[a];
+
+executable tell_b1_1[b] if B(b, at_b1_1);
+tell_b1_1[b] announces at_b1_1;
+a observes tell_b1_1[b];
+b observes tell_b1_1[b];
+
+executable tell_b1_3[b] if B(b, at_b1_3);
+tell_b1_3[b] announces at_b1_3;
+a observes tell_b1_3[b];
+b observes tell_b1_3[b];
+
+executable tell_b1_4[b] if B(b, at_b1_4);
+tell_b1_4[b] announces at_b1_4;
+a observes tell_b1_4[b];
+b observes tell_b1_4[b];
+
+
+
+executable tell_b2_1[a] if B(a, at_b2_1);
+tell_b2_1[a] announces at_b2_1;
+a observes tell_b2_1[a];
+b observes tell_b2_1[a];
+
+executable tell_b2_3[a] if B(a, at_b2_3);
+tell_b2_3[a] announces at_b2_3;
+a observes tell_b2_3[a];
+b observes tell_b2_3[a];
+
+executable tell_b2_4[a] if B(a, at_b2_4);
+tell_b2_4[a] announces at_b2_4;
+a observes tell_b2_4[a];
+b observes tell_b2_4[a];
+
+executable tell_b2_1[b] if B(b, at_b2_1);
+tell_b2_1[b] announces at_b2_1;
+a observes tell_b2_1[b];
+b observes tell_b2_1[b];
+
+executable tell_b2_3[b] if B(b, at_b2_3);
+tell_b2_3[b] announces at_b2_3;
+a observes tell_b2_3[b];
+b observes tell_b2_3[b];
+
+executable tell_b2_4[b] if B(b, at_b2_4);
+tell_b2_4[b] announces at_b2_4;
+a observes tell_b2_4[b];
+b observes tell_b2_4[b];
+
+initially at_a_2, at_b_2, -at_a_1, -at_a_3, -at_a_4, -at_b_1, -at_b_3, -at_b_4, at_b1_1, -at_b1_3, -at_b1_4, -at_b2_1, at_b2_3, -at_b2_4;
+initially C([a,b], at_a_2);
+initially C([a,b], at_b_2);
+initially C([a,b], -at_a_1);
+initially C([a,b], -at_b_1);
+initially C([a,b], -at_a_3);
+initially C([a,b], -at_b_3);
+initially C([a,b], -at_a_4);
+initially C([a,b], -at_b_4);
+
+initially C([a,b], (at_b1_1,-at_b1_3,-at_b1_4) | (-at_b1_1,at_b1_3,-at_b1_4) | (-at_b1_1,-at_b1_3,at_b1_4));
+initially C([a,b], (at_b2_1,-at_b2_3,-at_b2_4) | (-at_b2_1,at_b2_3,-at_b2_4) | (-at_b2_1,-at_b2_3,at_b2_4));
+
+% 6 actions
+goal B(b,at_b1_1);
+goal B(b,at_b2_3);
+goal C([a,b], at_b2_3);
+goal B(a,at_a_2);
+goal B(b,at_a_2);

@@ -1,0 +1,82 @@
+%%% Executed actions: right[a] sense[a] right[a] right[a] shout_4[a] %%%
+
+fluent q, at_1, at_2, at_3, at_4;
+
+action right[a], left[a], sense[a], shout_1[a], shout_2[a], shout_3[a], shout_4[a];
+
+agent a,b,c,d,e,f,g;
+
+executable right[a] if -at_4;
+right[a] causes at_2 if at_1;
+right[a] causes -at_1 if at_1;
+right[a] causes at_3 if at_2;
+right[a] causes -at_2 if at_2;
+right[a] causes at_4 if at_3;
+right[a] causes -at_3 if at_3;
+
+a observes right[a];
+b observes right[a];
+c observes right[a];
+
+
+
+executable left[a] if -at_1;
+left[a] causes at_3 if at_4;
+left[a] causes -at_4 if at_4;
+left[a] causes at_2 if at_3;
+left[a] causes -at_3 if at_3;
+left[a] causes at_1 if at_2;
+left[a] causes -at_2 if at_2;
+
+a observes left[a];
+b observes left[a];
+c observes left[a];
+
+executable sense[a] if at_2;
+sense[a] determines q;
+a observes sense[a];
+
+executable shout_1[a] if B(a, q), at_1;
+shout_1[a] announces q;
+a observes shout_1[a];
+b observes shout_1[a];
+d observes shout_1[a];
+e observes shout_1[a];
+f observes shout_1[a];
+g observes shout_1[a];
+
+executable shout_2[a] if B(a, q), at_2;
+shout_2[a] announces q;
+a observes shout_2[a];
+b observes shout_2[a];
+c observes shout_2[a];
+d observes shout_2[a];
+e observes shout_2[a];
+f observes shout_2[a];
+g observes shout_2[a];
+
+executable shout_3[a] if B(a, q), at_3;
+shout_3[a] announces q;
+a observes shout_3[a];
+b observes shout_3[a];
+c observes shout_3[a];
+d observes shout_3[a];
+e observes shout_3[a];
+f observes shout_3[a];
+g observes shout_3[a];
+
+executable shout_4[a] if B(a, q), at_4;
+shout_4[a] announces q;
+a observes shout_4[a];
+c observes shout_4[a];
+
+initially at_1, -at_2, -at_3, -at_4, q;
+initially C([a,b,c,d,e,f,g],at_1);
+initially C([a,b,c,d,e,f,g],-at_2);
+initially C([a,b,c,d,e,f,g],-at_3);
+initially C([a,b,c,d,e,f,g],-at_4);
+
+% 5 actions
+goal B(c,q);
+goal (-B(b,q));
+ 

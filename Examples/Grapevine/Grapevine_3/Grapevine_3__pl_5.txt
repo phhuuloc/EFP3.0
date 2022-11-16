@@ -1,0 +1,180 @@
+%%% Executed actions: share_a_sa_1 right_a share_c_sc_1 right_b share_b_sb_2 %%%
+
+fluent at_a_1,at_a_2,at_b_1,at_b_2,at_c_1,at_c_2,sa,sb,sc;
+
+action right[a], right[b], right[c], left[a], left[b], left[c], share_sa_1[a], share_sa_2[a], share_sb_1[a], share_sb_2[a], share_sc_1[a], share_sc_2[a], share_sa_1[b], share_sa_2[b], share_sb_1[b], share_sb_2[b], share_sc_1[b], share_sc_2[b], share_sa_1[c], share_sa_2[c], share_sb_1[c], share_sb_2[c], share_sc_1[c], share_sc_2[c];
+
+agent a,b,c;
+
+executable right[a] if at_a_1;
+right[a] causes at_a_2, -at_a_1;
+executable right[b] if at_b_1;
+right[b] causes at_b_2, -at_b_1;
+executable right[c] if at_c_1;
+right[c] causes at_c_2, -at_c_1;
+
+executable left[a] if at_a_2;
+left[a] causes -at_a_2, at_a_1;
+executable left[b] if at_b_2;
+left[b] causes -at_b_2, at_b_1;
+executable left[c] if at_c_2;
+left[c] causes -at_c_2, at_c_1;
+
+executable share_sa_1[a] if B(a,sa), at_a_1;
+share_sa_1[a] announces sa;
+
+executable share_sa_2[a] if B(a,sa), at_a_2;
+share_sa_2[a] announces sa;
+
+executable share_sb_1[a] if  B(a,sb), at_a_1;
+share_sb_1[a] announces sb;
+
+executable share_sb_2[a] if  B(a,sb), at_a_2;
+share_sb_2[a] announces sb;
+
+executable share_sc_1[a] if  B(a,sc), at_a_1;
+share_sc_1[a] announces sc;
+
+executable share_sc_2[a] if B(a,sc), at_a_2;
+share_sc_2[a] announces sc;
+
+executable share_sa_1[b] if B(b,sa), at_b_1;
+share_sa_1[b] announces sa;
+
+executable share_sa_2[b] if B(b,sa), at_b_2;
+share_sa_2[b] announces sa;
+
+executable share_sb_1[b] if B(b,sb), at_b_1;
+share_sb_1[b] announces sb;
+
+executable share_sb_2[b] if B(b,sb), at_b_2;
+share_sb_2[b] announces sb;
+
+executable share_sc_1[b] if B(b,sc), at_b_1;
+share_sc_1[b] announces sc;
+
+executable share_sc_2[b] if B(b,sc), at_b_2;
+share_sc_2[b] announces sc;
+
+executable share_sa_1[c] if B(c,sa), at_c_1;
+share_sa_1[c] announces sa;
+
+executable share_sa_2[c] if B(c,sa), at_c_2;
+share_sa_2[c] announces sa;
+
+executable share_sb_1[c] if B(c,sb), at_c_1;
+share_sb_1[c] announces sb;
+
+executable share_sb_2[c] if B(c,sb), at_c_2;
+share_sb_2[c] announces sb;
+
+executable share_sc_1[c] if B(c,sc), at_c_1;
+share_sc_1[c] announces sc;
+
+executable share_sc_2[c] if B(c,sc), at_c_2;
+share_sc_2[c] announces sc;
+
+a observes right[a] if at_a_1;
+b observes right[a] if at_b_1;
+c observes right[a] if at_c_1;
+
+a observes right[b] if at_a_1;
+b observes right[b] if at_b_1;
+c observes right[b] if at_c_1;
+
+a observes right[c] if at_a_1;
+b observes right[c] if at_b_1;
+c observes right[c] if at_c_1;
+
+a observes left[a] if at_a_2;
+b observes left[a] if at_b_2;
+c observes left[a] if at_c_2;
+
+a observes left[b] if at_a_2;
+b observes left[b] if at_b_2;
+c observes left[b] if at_c_2;
+
+a observes left[c] if at_a_2;
+b observes left[c] if at_b_2;
+c observes left[c] if at_c_2;
+
+a observes share_sa_1[a] if at_a_1;
+a observes share_sa_2[a] if at_a_2;
+b observes share_sa_1[a] if at_b_1;
+b observes share_sa_2[a] if at_b_2;
+c observes share_sa_1[a] if at_c_1;
+c observes share_sa_2[a] if at_c_2;
+
+a observes share_sb_1[a] if at_a_1;
+a observes share_sb_2[a] if at_a_2;
+b observes share_sb_1[a] if at_b_1;
+b observes share_sb_2[a] if at_b_2;
+c observes share_sb_1[a] if at_c_1;
+c observes share_sb_2[a] if at_c_2;
+
+a observes share_sc_1[a] if at_a_1;
+a observes share_sc_2[a] if at_a_2;
+b observes share_sc_1[a] if at_b_1;
+b observes share_sc_2[a] if at_b_2;
+c observes share_sc_1[a] if at_c_1;
+c observes share_sc_2[a] if at_c_2;
+
+a observes share_sa_1[b] if at_a_1;
+a observes share_sa_2[b] if at_a_2;
+b observes share_sa_1[b] if at_b_1;
+b observes share_sa_2[b] if at_b_2;
+c observes share_sa_1[b] if at_c_1;
+c observes share_sa_2[b] if at_c_2;
+
+a observes share_sb_1[b] if at_a_1;
+a observes share_sb_2[b] if at_a_2;
+b observes share_sb_1[b] if at_b_1;
+b observes share_sb_2[b] if at_b_2;
+c observes share_sb_1[b] if at_c_1;
+c observes share_sb_2[b] if at_c_2;
+
+a observes share_sc_1[b] if at_a_1;
+a observes share_sc_2[b] if at_a_2;
+b observes share_sc_1[b] if at_b_1;
+b observes share_sc_2[b] if at_b_2;
+c observes share_sc_1[b] if at_c_1;
+c observes share_sc_2[b] if at_c_2;
+
+a observes share_sa_1[c] if at_a_1;
+a observes share_sa_2[c] if at_a_2;
+b observes share_sa_1[c] if at_b_1;
+b observes share_sa_2[c] if at_b_2;
+c observes share_sa_1[c] if at_c_1;
+c observes share_sa_2[c] if at_c_2;
+
+a observes share_sb_1[c] if at_a_1;
+a observes share_sb_2[c] if at_a_2;
+b observes share_sb_1[c] if at_b_1;
+b observes share_sb_2[c] if at_b_2;
+c observes share_sb_1[c] if at_c_1;
+c observes share_sb_2[c] if at_c_2;
+
+a observes share_sc_1[c] if at_a_1;
+a observes share_sc_2[c] if at_a_2;
+b observes share_sc_1[c] if at_b_1;
+b observes share_sc_2[c] if at_b_2;
+c observes share_sc_1[c] if at_c_1;
+c observes share_sc_2[c] if at_c_2;
+
+initially at_a_1, at_b_1, at_c_1, -at_a_2, -at_b_2, -at_c_2, sa, sb, sc;
+initially C([a,b,c], at_a_1);
+initially C([a,b,c], at_b_1);
+initially C([a,b,c], at_c_1);
+initially C([a,b,c], -at_a_2);
+initially C([a,b,c], -at_b_2);
+initially C([a,b,c], -at_c_2);
+initially C([a,b,c], B(a,sa) | B(a, -sa));
+initially C([a,b,c], B(b,sb) | B(b, -sb));
+initially C([a,b,c], B(c,sc) | B(c, -sc));
+
+% 5 actions
+goal B(a, sb);
+goal B(b, sc);
+goal B(c, sa);
+goal (-B(a, sc));
+goal (-B(c, sb));
