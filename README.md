@@ -13,6 +13,7 @@ Requirements:
   flex, bison and a C++ compiler such as g++.
 
 To run the solver: 
+
       make
 
       ./cpa+ inputFileName                #for EFP3.0 with breath-first-search algorithm
