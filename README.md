@@ -6,7 +6,9 @@ Solver for Epistemic Planning (tested on iOS 10.15.x)
 
 Compilation
 
+
   make
+  
 
 Requirements:
 
